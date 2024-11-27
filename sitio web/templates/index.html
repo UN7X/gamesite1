@@ -1,0 +1,27 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Webpage</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Welcome, {{ username }}!</h1>
+    <p>This is a dedicated space for your HTML content.</p>
+    <a href="{{ url_for('logout') }}">Log Out</a>
+    <!-- Delete Account Button -->
+    <button id="delete-account-btn">Delete Account</button>
+
+    <!-- JavaScript to handle confirmation -->
+    <script>
+        document.getElementById('delete-account-btn').addEventListener('click', function(event) {
+            var shiftPressed = event.shiftKey;
+            if (shiftPressed || confirm('Are you sure you want to delete your account?')) {
+                // Redirect to the delete_account route
+                window.location.href = "{{ url_for('delete_account') }}";
+            }
+        });
+    </script>
+</body>
+</html>

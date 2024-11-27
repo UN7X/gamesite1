@@ -1,0 +1,27 @@
+<!-- templates/login.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Log In</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Log In</h1>
+    <form method="post">
+        {% if error %}
+        <div class="error-box">{{ error }}</div>
+        {% endif %}
+        <label>Username:</label><br>
+        <input type="text" name="username" required><br>
+        <label>Password:</label><br>
+        <input type="password" name="password" required><br>
+        <button type="submit">Log In</button>
+    </form>
+    <p>Don't have an account? <a href="{{ url_for('signup') }}">Sign up here</a>.</p>
+    <!-- Continue as Guest Button -->
+    <form action="{{ url_for('guest_login') }}" method="get">
+        <button type="submit">Continue as Guest</button>
+    </form>
+</body>
+</html>

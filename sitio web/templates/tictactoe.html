@@ -1,0 +1,36 @@
+<!-- templates/tictactoe.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tic-Tac-Toe</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <!-- Include Socket.IO -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"></script>
+</head>
+<body>
+    <h1>Tic-Tac-Toe</h1>
+    <p>Game coming soon!</p>
+    <a href="{{ url_for('game_lobby') }}">Back to Lobby</a>
+    <!-- Placeholder for the game board -->
+    <div id="game-board">
+        <!-- Create a 3x3 grid for the Tic-Tac-Toe board -->
+        <table>
+            {% for row in range(3) %}
+            <tr>
+                {% for col in range(3) %}
+                <td id="cell-{{ row }}-{{ col }}" class="cell"></td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <script>
+        var socket = io();
+        socket.emit('join_game', { 'username': '{{ username }}' });
+
+        // Client-side game logic
+        // ... [JavaScript to handle clicks and update the game board] ...
+    </script>
+</body>
+</html>
