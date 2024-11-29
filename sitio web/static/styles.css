@@ -81,3 +81,28 @@ form .error-box {
 #game-board td:hover {
     background-color: #f0f0f0;
 }
+
+#status {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.cell {
+    transition: background-color 0.3s, transform 0.2s;
+    cursor: pointer;
+}
+
+.cell:hover {
+    background-color: #f0f0f0;
+}
+
+.mark {
+    opacity: 0;
+    transition: opacity 0.5s, transform 0.5s;
+}
+
+.mark.visible {
+    opacity: 1;
+    transform: scale(1.2);
+}

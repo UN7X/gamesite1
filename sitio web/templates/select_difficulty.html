@@ -1,0 +1,22 @@
+<!-- templates/select_difficulty.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ game_name }} - Select Difficulty</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>{{ game_name }} - Play Against AI</h1>
+    <form method="post">
+        <label>Select Difficulty:</label><br>
+        <select name="difficulty">
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+        </select><br><br>
+        <button type="submit">Start Game</button>
+    </form>
+    <a href="{{ url_for('play_local', game_name=game_name) }}">Back</a>
+</body>
+</html>

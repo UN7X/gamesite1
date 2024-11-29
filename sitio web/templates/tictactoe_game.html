@@ -1,0 +1,33 @@
+<!-- templates/tictactoe.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ game_name }} Game</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    {% if mode != 'local' %}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"></script>
+    {% endif %}
+</head>
+<body>
+    <h1>{{ game_name }}</h1>
+    <p id="status">Game is starting...</p>
+    <div id="game-board">
+        <table>
+            {% for row in range(3) %}
+            <tr>
+                {% for col in range(3) %}
+                <td id="cell-{{ row }}-{{ col }}" class="cell" data-cell-index="{{ row * 3 + col }}"></td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <a href="{{ url_for('game_lobby') }}">Back to Lobby</a>
+    <script>
+        const mode = "{{ mode }}";
+        const difficulty = "{{ difficulty | default('', true) }}";
+    </script>
+    <script src="{{ url_for('static', filename='game.js') }}"></script>
+</body>
+</html>
