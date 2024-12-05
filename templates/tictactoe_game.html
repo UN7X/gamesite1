@@ -1,0 +1,16 @@
+<!-- templates/tictactoe_game.html -->
+{% extends "game_template.html" %}
+{% block game_content %}
+<p id="status">Game is starting...</p>
+<div id="game-board">
+    <table>
+        {% for row in range(3) %}
+        <tr>
+            {% for col in range(3) %}
+            <td id="cell-{{ row }}-{{ col }}" class="cell" data-cell-index="{{ row * 3 + col }}"></td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

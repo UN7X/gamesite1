@@ -1,0 +1,228 @@
+/* static/styles.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 20px;
+}
+
+h1 {
+    color: #333333;
+}
+
+p {
+    color: #666666;
+}
+
+form {
+    background-color: #ffffff;
+    padding: 20px;
+    border: 1px solid #dddddd;
+    max-width: 300px;
+    justify-content: center; /* Centers horizontally */
+    align-items: center; /* Centers vertically */
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #333333;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+}
+
+form .error-box {
+    background-color: #ffdddd;
+    border: 1px solid #ff5c5c;
+    color: #a94442;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+/* Style for the Delete Account button */
+#delete-account-btn {
+    background-color: #ff4d4d; /* Red color */
+    color: #ffffff;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px; /* Space between buttons */
+}
+
+#delete-account-btn:hover {
+    background-color: #ff1a1a; /* Darker red on hover */
+}
+
+#game-board {
+    margin: 20px auto;
+    width: 300px;
+}
+
+#game-board table {
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+}
+
+#game-board td {
+    width: 33%;
+    height: 100px;
+    border: 1px solid #333333;
+    text-align: center;
+    font-size: 48px;
+    cursor: pointer;
+}
+
+#game-board td:hover {
+    background-color: #f0f0f0;
+}
+
+#status {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.cell {
+    transition: background-color 0.3s, transform 0.2s;
+    cursor: pointer;
+}
+
+.cell:hover {
+    background-color: #f0f0f0;
+}
+
+.mark {
+    opacity: 0;
+    transition: opacity 0.5s, transform 0.5s;
+}
+
+.mark.visible {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+.notification {
+    position: fixed;
+    top: 20px;
+    left: -300px;
+    background-color: #444;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    transition: left 0.5s ease;
+    z-index: 1000;
+}
+
+.notification.show {
+    left: 20px;
+}
+
+#chat-container {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    border-top: 1px solid #ccc;
+}
+
+#chat-messages {
+    max-height: 150px;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+#chat-form {
+    display: flex;
+}
+
+#chat-input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-top: 1px solid #ccc;
+}
+
+#chat-form button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #28a745;
+    color: #fff;
+    cursor: pointer;
+}
+
+
+.cell {
+    font-size: 48px;
+    cursor: pointer;
+    text-align: center;
+    vertical-align: middle;
+    width: 100px;
+    height: 100px;
+    border: 1px solid #333;
+}
+
+.cell.X {
+    color: #ff6666; /* Light red */
+}
+
+.cell.O {
+    color: #66b3ff; /* Light blue */
+}
+
+.cell.winner {
+    background-color: #80ff80; /* Light green */
+}
+
+.join-code {
+    font-size: 0.8em;
+    color: grey;
+    margin-left: 10px;
+}
+
+
+#chat-container {
+    width: 300px;
+    margin: 20px auto;
+}
+
+.chat-messages {
+    height: 200px;
+    border: 1px solid #ccc;
+    overflow-y: scroll;
+    padding: 10px;
+    background-color: #f9f9f9;
+}
+
+.chat-message {
+    margin-bottom: 5px;
+}
+
+.chat-notification {
+    font-style: italic;
+    color: grey;
+    margin-bottom: 5px;
+}
+
+#chat-form {
+    display: flex;
+    margin-top: 10px;
+}
+
+#chat-input {
+    flex: 1;
+    padding: 5px;
+}
+
+#chat-form button {
+    padding: 5px 10px;
+}
+

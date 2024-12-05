@@ -1,0 +1,24 @@
+<!-- templates/host_session.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Host a {{ game_name }} Session</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Host a {{ game_name }} Session</h1>
+    <form action="{{ url_for('host_session', game_name=game_name) }}" method="post">
+        <label for="custom_code">Custom Join Code (Optional):</label>
+        <input type="text" name="custom_code" id="custom_code" placeholder="Enter a custom join code">
+        <br><br>
+        <label>
+            <input type="checkbox" name="is_public" value="yes" checked>
+            Make this session public
+        </label>
+        <br><br>
+        <button type="submit">Host Session</button>
+    </form>
+    <a href="{{ url_for('game_options', game_name=game_name) }}">Back</a>
+</body>
+</html>

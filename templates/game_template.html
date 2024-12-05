@@ -1,0 +1,36 @@
+<!-- game_template.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ game_name }} Game</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    {% if mode == 'online' %}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"></script>
+    {% endif %}
+</head>
+<body>
+    <h1>{{ game_name }} <span id="join-code" class="join-code">(Join Code: {{ code }})</span></h1>
+    {% if mode == 'online' %}
+    <div id="game-container">
+        <!-- Game-specific elements will be inserted here -->
+        {% block game_content %}{% endblock %}
+    </div>
+    <div id="chat-container">
+        <div id="chat-messages" class="chat-messages"></div>
+        <form id="chat-form">
+            <input type="text" id="chat-input" autocomplete="off" placeholder="Type a message..." />
+            <button type="submit">Send</button>
+        </form>
+    </div>
+    {% endif %}
+    <a href="{{ url_for('game_lobby') }}">Back to Lobby</a>
+    <script>
+        const mode = "{{ mode }}";
+        const difficulty = "{{ difficulty | default('', true) }}";
+        const code = "{{ code }}";
+        const username = "{{ username }}";
+    </script>
+    <script src="{{ url_for('static', filename='tictactoe_game.js') }}"></script>
+</body>
+</html>

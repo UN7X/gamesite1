@@ -1,0 +1,38 @@
+<!-- templates/public_sessions.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Public {{ game_name }} Sessions</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Public {{ game_name }} Sessions</h1>
+    {% if public_rooms %}
+    <table>
+        <tr>
+            <th>Join Code</th>
+            <th>Host</th>
+            <th>Created At</th>
+            <th>Action</th>
+        </tr>
+        {% for room in public_rooms %}
+        <tr>
+            <td>{{ room.code }}</td>
+            <td>{{ room.host }}</td>
+            <td>{{ room.created_at }}</td>
+            <td>
+                <form action="{{ url_for('join_session', game_name=game_name) }}" method="post">
+                    <input type="hidden" name="code" value="{{ room.code }}">
+                    <button type="submit">Join</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>No public sessions available at the moment.</p>
+    {% endif %}
+    <a href="{{ url_for('game_options', game_name=game_name) }}">Back</a>
+</body>
+</html>

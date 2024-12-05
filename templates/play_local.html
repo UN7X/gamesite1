@@ -1,0 +1,18 @@
+<!-- templates/play_local.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ game_name }} - Local Play</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>{{ game_name }} - Local Play</h1>
+    <p>Select a mode:</p>
+    <ul>
+        <li><a href="{{ url_for('play_ai', game_name=game_name) }}">Play Against AI</a></li>
+        <li><a href="{{ url_for('local_multiplayer', game_name=game_name) }}">Two Player Local</a></li>
+    </ul>
+    <a href="{{ url_for('game_options', game_name=game_name) }}">Back</a>
+</body>
+</html>
