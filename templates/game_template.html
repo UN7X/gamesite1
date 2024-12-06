@@ -10,12 +10,13 @@
     {% endif %}
 </head>
 <body>
-    <h1>{{ game_name }} <span id="join-code" class="join-code">(Join Code: {{ code }})</span></h1>
-    {% if mode == 'online' %}
+    <h1>{{ game_name }} {% if mode == 'online' %}<span id="join-code" class="join-code">(Join Code: {{ code }})</span> {% endif %}</h1>
+
     <div id="game-container">
         <!-- Game-specific elements will be inserted here -->
         {% block game_content %}{% endblock %}
     </div>
+    {% if mode == 'online' %}
     <div id="chat-container">
         <div id="chat-messages" class="chat-messages"></div>
         <form id="chat-form">

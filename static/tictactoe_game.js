@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (mode === 'local' || mode === 'ai') {
+        currentPlayer = 'X';
         gameActive = true;
         statusDisplay.textContent = 'Game started. Your turn.';
     } else if (mode === 'online') {

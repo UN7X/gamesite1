@@ -11,7 +11,7 @@
     <p>Select how you want to play:</p>
     <ul>
         <li><a href="{{ url_for('play_local', game_name=game_name) }}">Play Local</a></li>
-        <li><a href="{{ url_for('host_session', game_name=game_name) }}">Host a Session</a></li>
+        <li><a href="{{ url_for('host_session_unique', game_name=game_name) }}">Host a Session</a></li>
         <li>
             <form action="{{ url_for('join_session', game_name=game_name) }}" method="post">
                 <input type="text" name="code" placeholder="Enter Join Code" required>

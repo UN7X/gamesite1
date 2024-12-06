@@ -172,6 +172,20 @@ rooms = {}
 def on_join_room(data):
     code = data['code']
     username = data['username']
+
+    if not code or not username:
+        emit('error', {'message': 'Invalid data provided.'})
+        return
+
+    if code not in rooms:
+        emit('error', {'message': 'Invalid join code.'})
+        return
+
+    # Prevent duplicate usernames in the same room
+    if username in rooms[code]['players']:
+        emit('error', {'message': 'Username already taken in this room.'})
+        return
+
     join_room(code)
     if code in rooms:
         rooms[code]['players'].append(username)
@@ -292,20 +306,22 @@ def play_local(game_name):
         return redirect(url_for('login'))
 
 @app.route('/host_session/<game_name>')
-def host_session(game_name):
+def host_session_redirect(game_name):
     if 'username' in session:
         code = generate_join_code()
         return redirect(url_for('game_session', game_name=game_name, code=code))
     else:
         return redirect(url_for('login'))
 
-@app.route('/join_session/<game_name>', methods=['POST'])
+@app.route('/join_session/<game_name>', methods=['GET', 'POST'], endpoint='join_session')
 def join_session(game_name):
-    if 'username' in session:
+    if 'username' in session and request.method == 'POST':
         code = request.form['code']
         return redirect(url_for('game_session', game_name=game_name, code=code))
-    else:
+    elif 'username' not in session:
         return redirect(url_for('login'))
+    else:
+        return render_template('join_session.html', game_name=game_name)
 
 @app.route('/game_session/<game_name>/<code>')
 def game_session(game_name, code):
@@ -334,7 +350,7 @@ def local_multiplayer(game_name):
         return redirect(url_for('login'))
 
 @app.route('/<game_name>/host_session', methods=['GET', 'POST'], endpoint='host_session_unique')
-def host_session(game_name):
+def host_session_unique(game_name):
     if request.method == 'POST':
         custom_code = request.form.get('custom_code', '').strip()
         is_public = request.form.get('is_public') == 'yes'
