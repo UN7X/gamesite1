@@ -369,7 +369,7 @@ def host_session_unique(game_name):
             'host': session.get('username', 'Guest'),
             'created_at': datetime.datetime.now()
         }
-        return redirect(url_for('play_online', game_name=game_name, code=code))
+        return redirect(url_for('game_session', game_name=game_name, code=code))
     else:
         return render_template('host_session.html', game_name=game_name)
 

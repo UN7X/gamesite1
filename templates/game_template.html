@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <title>{{ game_name }} Game</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <!-- game_template.html -->
+    <script src="{{ url_for('static', filename='dark_mode.js') }}"></script>
     {% if mode == 'online' %}
     <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"></script>
     {% endif %}

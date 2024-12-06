@@ -226,3 +226,7 @@ form .error-box {
     padding: 5px 10px;
 }
 
+body.dark-mode {
+    background-color:#444;
+    color:#dddddd;
+}

@@ -167,19 +167,49 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleCellClick(event) {
         const clickedCell = event.target;
         const clickedCellIndex = parseInt(clickedCell.getAttribute('data-cell-index'));
-
+    
         if (board[clickedCellIndex] !== '' || !gameActive) {
             return;
         }
-
+    
         if (mode === 'online') {
+            // Only proceed if it's the player's turn
             if (currentPlayer !== playerSymbol) {
                 return;
             }
+    
             makeMove(clickedCellIndex, playerSymbol);
-            socket.emit('make_move', { code: code, board: board, playerSymbol: playerSymbol });
+    
+            const winner = checkWinner();
+            if (winner) {
+                gameActive = false;
+            } else {
+                // Switch turns
+                currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            }
+    
+            // Send the move to the server
+            socket.emit('make_move', {
+                code: code,
+                board: board,
+                currentPlayer: currentPlayer,
+                playerSymbol: playerSymbol
+            });
         } else {
+            // Existing logic for local and AI modes
             makeMove(clickedCellIndex, currentPlayer);
+    
+            const winner = checkWinner();
+            if (winner) {
+                if (winner === 'Draw') {
+                    statusDisplay.textContent = "It's a draw!";
+                } else {
+                    statusDisplay.textContent = `Player ${winner} wins!`;
+                }
+                gameActive = false;
+                return;
+            }
+    
             if (mode === 'ai' && gameActive) {
                 currentPlayer = 'O';
                 statusDisplay.textContent = "AI's turn";

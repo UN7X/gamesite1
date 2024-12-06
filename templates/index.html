@@ -12,8 +12,10 @@
     <a href="{{ url_for('logout') }}">Log Out</a>
     <!-- Delete Account Button -->
     <button id="delete-account-btn">Delete Account</button>
-
-    <!-- JavaScript to handle confirmation -->
+    <!-- game_template.html -->
+    <button id="dark-mode-toggle">Toggle Dark Mode</button>
+    <!-- game_template.html -->
+    <script src="{{ url_for('static', filename='dark_mode.js') }}"></script>
     <script>
         document.getElementById('delete-account-btn').addEventListener('click', function(event) {
             var shiftPressed = event.shiftKey;
