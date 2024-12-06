@@ -194,10 +194,22 @@ def on_join_room(data):
     emit('player_joined', {'username': username}, room=code)
 
     if len(rooms[code]['players']) == 2:
-        # Start the game
-        players = rooms[code]['players']
-        emit('game_start', {'symbol': 'X', 'opponent': players[1]}, to=request.sid)
-        emit('game_start', {'symbol': 'O', 'opponent': players[0]}, room=code, include_self=False)
+        # Start the game, commented code below is temporarily disable for debugging, and has been replaced with an updated script. 
+        # players = rooms[code]['players']
+        # emit('game_start', {'symbol': 'X', 'opponent': players[1]}, to=request.sid)
+        # emit('game_start', {'symbol': 'O', 'opponent': players[0]}, room=code, include_self=False)
+        players = list(rooms['players'].values())
+        player1, player2 = players[0], players[1]
+        # Send 'game_start' event to player1
+        emit('game_start', {
+            'symbol': player1['symbol'],
+            'opponent': player2['username']
+        }, room=player1['sid'])
+        # Send 'game_start' event to player2
+        emit('game_start', {
+            'symbol': player2['symbol'],
+            'opponent': player1['username']
+        }, room=player2['sid'])
 
 @socketio.on('make_move')
 def on_make_move(data):
