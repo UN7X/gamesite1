@@ -187,29 +187,44 @@ def on_join_room(data):
         return
 
     join_room(code)
-    if code in rooms:
-        rooms[code]['players'].append(username)
-    else:
-        rooms[code] = {'players': [username], 'board': [''] * 9, 'currentPlayer': 'X'}
-    emit('player_joined', {'username': username}, room=code)
 
-    if len(rooms[code]['players']) == 2:
-        # Start the game, commented code below is temporarily disable for debugging, and has been replaced with an updated script. 
-        # players = rooms[code]['players']
-        # emit('game_start', {'symbol': 'X', 'opponent': players[1]}, to=request.sid)
-        # emit('game_start', {'symbol': 'O', 'opponent': players[0]}, room=code, include_self=False)
-        players = list(rooms['players'].values())
+    if code not in rooms:
+        rooms[code] = {
+            "players": {},
+            "board": [""] * 9,
+            "currentPlayer": "X"
+        }
+
+    # If the room has 0 players, assign 'X', else assign 'O'
+    if len(rooms[code]["players"]) == 0:
+        symbol = "X"
+    else:
+        symbol = "O"
+
+    rooms[code]["players"][request.sid] = {
+        "sid": request.sid,
+        "username": username,
+        "symbol": symbol
+    }
+    emit("player_joined", {"username": username}, room=code)
+
+
+    if len(rooms[code]["players"]) == 2:
+        players = list(rooms[code]["players"].values())  # This is now a list of dicts
+        # e.g. [ {"sid": <>, "username": <>, "symbol": "X"}, {...} ]
+
         player1, player2 = players[0], players[1]
-        # Send 'game_start' event to player1
+
         emit('game_start', {
             'symbol': player1['symbol'],
             'opponent': player2['username']
         }, room=player1['sid'])
-        # Send 'game_start' event to player2
+
         emit('game_start', {
             'symbol': player2['symbol'],
             'opponent': player1['username']
         }, room=player2['sid'])
+
 
 @socketio.on('make_move')
 def on_make_move(data):
@@ -367,19 +382,20 @@ def host_session_unique(game_name):
         custom_code = request.form.get('custom_code', '').strip()
         is_public = request.form.get('is_public') == 'yes'
         code = custom_code if custom_code else generate_join_code()
+        date = datetime.datetime.now()
         
         # Ensure the join code is unique
         while code in rooms:
             code = generate_join_code() if not custom_code else code + str(random.randint(0,9))
-
+        
         rooms[code] = {
             'game_name': game_name,
-            'players': [],
-            'board': ['']*9,
+            'players': {},
+            'board': ["", "", "", "", "", "", "", "", ""],
             'currentPlayer': 'X',
             'is_public': is_public,
             'host': session.get('username', 'Guest'),
-            'created_at': datetime.datetime.now()
+            'created_at': date
         }
         return redirect(url_for('game_session', game_name=game_name, code=code))
     else:
@@ -397,8 +413,7 @@ def public_sessions(game_name):
             })
     return render_template('public_sessions.html', game_name=game_name, public_rooms=public_rooms)
 
-def generate_join_code():
-    import random
+def generate_join_code():    
     import string
     return ''.join(random.choices(string.ascii_uppercase + string.digits, k=5))
 
