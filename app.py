@@ -276,12 +276,24 @@ def on_leave_game(data):
     code = data['code']
     username = data['username']
     if code in rooms:
-        leave_room(code)
-        rooms[code]['players'].remove(username)
-        if not rooms[code]['players']:
-            del rooms[code]
-        else:
-            emit('player_left', {'username': username}, room=code)
+        # find the SID for this username
+        players_dict = rooms[code]['players']
+        sid_to_remove = None
+
+        for sid, player_data in players_dict.items():
+            if player_data['username'] == username:
+                sid_to_remove = sid
+                break
+
+        if sid_to_remove is not None:
+            del players_dict[sid_to_remove]   # remove that player entry
+
+            # if the room is now empty, remove the entire room
+            if not players_dict:
+                del rooms[code]
+            else:
+                emit('player_left', {'username': username}, room=code)
+
 
 @socketio.on('chat_message')
 def handle_chat_message(data):
